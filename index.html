@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Study — Automated Trading Operations System | Natalie Lewis</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #000000;
+    --teal: #6D0504;
+    --light-teal: #F6F2E7;
+    --dark: #1A1A1A;
+    --mid: #4A4A4A;
+    --light: #8A8A8A;
+    --bg: #FDFCF9;
+    --white: #fff;
+    --green: #3D7C47;
+    --red: #6D0504;
+    --orange: #8B4513;
+    --border: #E5E0D5;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg);
+    color: var(--dark);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, #000000 0%, #1A0A0A 100%);
+    padding: 60px 0 50px;
+    text-align: center;
+  }
+
+  .hero .badge {
+    display: inline-block;
+    background: rgba(109, 5, 4, 0.2);
+    color: #D4A39A;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(109, 5, 4, 0.3);
+    margin-bottom: 20px;
+  }
+
+  .hero h1 {
+    color: var(--white);
+    font-family: 'Playfair Display', serif;
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 12px;
+    letter-spacing: -0.3px;
+  }
+
+  .hero .subtitle {
+    color: rgba(255,255,255,0.5);
+    font-size: 15px;
+    font-weight: 300;
+  }
+
+  /* Stats bar */
+  .stats-bar {
+    background: var(--light-teal);
+    border-bottom: 1px solid var(--border);
+    padding: 28px 0;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    text-align: center;
+  }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--teal);
+    line-height: 1.2;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--light);
+    font-weight: 500;
+    margin-top: 4px;
+  }
+
+  /* Content sections */
+  .content {
+    padding: 48px 0 60px;
+  }
+
+  .section {
+    margin-bottom: 44px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 10px;
+  }
+
+  .section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 16px;
+    letter-spacing: -0.3px;
+  }
+
+  .section p {
+    font-size: 15px;
+    color: var(--mid);
+    margin-bottom: 14px;
+  }
+
+  /* Before/After comparison */
+  .comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 24px 0;
+  }
+
+  .comparison-card {
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+
+  .comparison-card.before {
+    background: #F9F0F0;
+    border-color: #E0C5C5;
+  }
+
+  .comparison-card.after {
+    background: var(--light-teal);
+    border-color: #D9D3C4;
+  }
+
+  .comparison-card h3 {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .comparison-card.before h3 { color: var(--red); }
+  .comparison-card.after h3 { color: var(--green); }
+
+  .comparison-card li {
+    font-size: 14px;
+    color: var(--mid);
+    margin-bottom: 8px;
+    list-style: none;
+    padding-left: 20px;
+    position: relative;
+  }
+
+  .comparison-card.before li::before {
+    content: "✗";
+    position: absolute;
+    left: 0;
+    color: var(--red);
+    font-weight: 700;
+  }
+
+  .comparison-card.after li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--green);
+    font-weight: 700;
+  }
+
+  /* Systems breakdown */
+  .system-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+    margin-bottom: 14px;
+    border-left: 4px solid var(--teal);
+  }
+
+  .system-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+
+  .system-card .purpose {
+    font-size: 13px;
+    color: var(--teal);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .system-card p {
+    font-size: 14px;
+    color: var(--mid);
+    margin-bottom: 0;
+  }
+
+  /* Results table */
+  .results-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .results-table th {
+    background: var(--navy);
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 12px 16px;
+    text-align: left;
+  }
+
+  .results-table td {
+    padding: 12px 16px;
+    font-size: 14px;
+    color: var(--mid);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .results-table tr:nth-child(even) td {
+    background: #FAF8F4;
+  }
+
+  .results-table .highlight {
+    color: #3D7C47;
+    font-weight: 700;
+  }
+
+  /* Method section */
+  .method-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 20px 0;
+  }
+
+  .method-step {
+    text-align: center;
+    padding: 20px 16px;
+    border-radius: 10px;
+    background: var(--white);
+    border: 1px solid var(--border);
+  }
+
+  .method-step .step-number {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--teal);
+    color: var(--white);
+    font-size: 16px;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+
+  .method-step h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+
+  .method-step p {
+    font-size: 13px;
+    color: var(--light);
+    margin: 0;
+  }
+
+  /* Tech stack */
+  .tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 16px 0;
+  }
+
+  .tech-tag {
+    background: var(--light-teal);
+    color: var(--teal);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 6px;
+  }
+
+  /* CTA */
+  .cta {
+    background: linear-gradient(135deg, #000000 0%, #1A0A0A 100%);
+    border-radius: 12px;
+    padding: 36px;
+    text-align: center;
+    margin-top: 48px;
+  }
+
+  .cta h2 {
+    color: var(--white);
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .cta p {
+    color: rgba(255,255,255,0.5);
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  .cta a {
+    display: inline-block;
+    background: #6D0504;
+    color: var(--white);
+    font-size: 14px;
+    font-weight: 700;
+    padding: 12px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .cta a:hover { background: #8B1A19; }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 32px 0;
+    font-size: 12px;
+    color: var(--light);
+  }
+
+  .footer .spec-note {
+    display: inline-block;
+    background: var(--light-teal);
+    color: #6D0504;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .hero h1 { font-size: 24px; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .comparison { grid-template-columns: 1fr; }
+    .method-steps { grid-template-columns: 1fr; }
+    .stat-number { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="container">
+    <div class="badge">Case Study — Anonymized</div>
+    <h1>How I Replaced 15+ Hours of Weekly Manual Work for a Trading Firm</h1>
+    <div class="subtitle">Two automated systems. Three data sources. Zero manual reporting.</div>
+  </div>
+</div>
+
+<!-- Stats Bar -->
+<div class="stats-bar">
+  <div class="container">
+    <div class="stats-grid">
+      <div>
+        <div class="stat-number">15+</div>
+        <div class="stat-label">Hours saved per week</div>
+      </div>
+      <div>
+        <div class="stat-number">3</div>
+        <div class="stat-label">Data sources integrated</div>
+      </div>
+      <div>
+        <div class="stat-number">~4 min</div>
+        <div class="stat-label">Total daily runtime</div>
+      </div>
+      <div>
+        <div class="stat-number">2</div>
+        <div class="stat-label">Team members freed up</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Content -->
+<div class="content">
+  <div class="container">
+
+    <!-- The Problem -->
+    <div class="section">
+      <div class="section-label">The Problem</div>
+      <h2>A Small Team Drowning in Manual Data Work</h2>
+      <p>A financial services firm managing a portfolio of trading signals needed to monitor performance across three separate platforms — none of which talked to each other. Every day, two team members spent a combined 3+ hours manually pulling data, cross-referencing account balances, checking equity-to-balance ratios, and determining which accounts needed rebalancing.</p>
+      <p>The process ran twice daily due to the volume of signals, and the manual nature meant critical flags got missed. On weeks when the team couldn't complete all the rebalancing checks on time, higher-risk accounts underperformed compared to their benchmark signals — costing real money.</p>
+
+      <div class="comparison">
+        <div class="comparison-card before">
+          <h3>Before</h3>
+          <ul>
+            <li>~3 hours per day of manual data pulling across 3 platforms</li>
+            <li>2 team members tied up on repetitive extraction work</li>
+            <li>Equity monitoring done by eye — critical rebalancing flags missed</li>
+            <li>When the team fell behind, high-risk accounts underperformed</li>
+            <li>No audit trail — trade-by-trade analysis done ad hoc</li>
+          </ul>
+        </div>
+        <div class="comparison-card after">
+          <h3>After</h3>
+          <ul>
+            <li>~4 minutes total runtime for all three scripts daily</li>
+            <li>Both team members freed to focus on strategy and execution</li>
+            <li>Automated equity monitoring flags accounts over 20% threshold</li>
+            <li>Rebalancing alerts delivered same-day, no manual checking</li>
+            <li>Full trade-by-trade audit trail with profit-per-microlot analysis</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- What I Built -->
+    <div class="section">
+      <div class="section-label">What I Built</div>
+      <h2>Two Automated Systems From the Same Data Sources</h2>
+      <p>I built two complementary systems that pull from the same three data sources but serve different purposes and different stakeholders within the firm.</p>
+
+      <div class="system-card">
+        <h3>System 1: Trade Auditing Pipeline</h3>
+        <div class="purpose">Audience: CTO & Trading Manager</div>
+        <p>Automated trade-by-trade analysis and profit-per-microlot calculations across all signals. Detects performance changes and anomalies, and alerts leadership of any deviations. Designed to answer: "Is each signal performing as expected, and if not, what changed?"</p>
+      </div>
+
+      <div class="system-card">
+        <h3>System 2: Daily Rebalancing Monitor</h3>
+        <div class="purpose">Audience: Trading Manager</div>
+        <p>Automated equity-to-balance monitoring across all live signal accounts. When the difference exceeds 20%, the system flags the account for same-day rebalancing instead of waiting for the weekly cycle. Designed to answer: "Which accounts need attention right now?"</p>
+      </div>
+
+      <p style="margin-top: 20px;">Both systems extract data from three sources that present very different technical challenges:</p>
+
+      <div class="system-card" style="border-left-color: var(--navy);">
+        <h3>Data Source 1: Public Performance Feed</h3>
+        <p>Web scraping of signal performance metrics from a public marketplace. Automated extraction on a daily schedule.</p>
+      </div>
+
+      <div class="system-card" style="border-left-color: var(--navy);">
+        <h3>Data Source 2: Broker Platform with API Access</h3>
+        <p>Direct API integration for account data and trade history. Batch extraction scripts pull and consolidate data across multiple accounts.</p>
+      </div>
+
+      <div class="system-card" style="border-left-color: var(--navy);">
+        <h3>Data Source 3: Legacy Broker Platform (No Standard Access)</h3>
+        <p>This platform actively blocks localhost connections and restricts port access. I built a custom script that runs inside the platform itself and pushes data to a FastAPI server through the one port it allows. This was the hardest technical problem in the project and the piece that made full automation possible.</p>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div class="section">
+      <div class="section-label">The Results</div>
+      <h2>From 3 Hours a Day to 4 Minutes</h2>
+
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Before</th>
+            <th>After</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Daily time on data extraction & monitoring</td>
+            <td>~3 hours (split across 2 sessions)</td>
+            <td class="highlight">~4 minutes (automated)</td>
+          </tr>
+          <tr>
+            <td>Weekly time on reporting & rebalancing checks</td>
+            <td>15+ hours across 2 people</td>
+            <td class="highlight">~30 minutes (review only)</td>
+          </tr>
+          <tr>
+            <td>Equity monitoring for rebalancing</td>
+            <td>Manual, checked by eye, sometimes missed</td>
+            <td class="highlight">Automated 20% threshold flagging, same-day alerts</td>
+          </tr>
+          <tr>
+            <td>High-risk account underperformance</td>
+            <td>Occurred on weeks when manual checks fell behind</td>
+            <td class="highlight">Eliminated — system catches flags daily</td>
+          </tr>
+          <tr>
+            <td>Trade-by-trade audit trail</td>
+            <td>Ad hoc, inconsistent</td>
+            <td class="highlight">Automated daily with profit-per-microlot analysis</td>
+          </tr>
+          <tr>
+            <td>People required for the process</td>
+            <td>2 team members</td>
+            <td class="highlight">0 (fully automated, 1 person reviews output)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Method -->
+    <div class="section">
+      <div class="section-label">My Process</div>
+      <h2>The Clear Dashboard Method</h2>
+      <p>Every project I take on follows the same three-phase process — whether it's trading infrastructure or marketing analytics.</p>
+
+      <div class="method-steps">
+        <div class="method-step">
+          <div class="step-number">1</div>
+          <h4>Map</h4>
+          <p>Audit the current workflow, identify every manual touchpoint, and document where time and accuracy are being lost.</p>
+        </div>
+        <div class="method-step">
+          <div class="step-number">2</div>
+          <h4>Build</h4>
+          <p>Construct the automated system — data extraction, consolidation, calculations, and reporting — all with error handling and documentation.</p>
+        </div>
+        <div class="method-step">
+          <div class="step-number">3</div>
+          <h4>Verify</h4>
+          <p>Run the new system alongside the old process, confirm accuracy, train the team, and hand over a clean, documented system.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tech Stack -->
+    <div class="section">
+      <div class="section-label">Tech Stack</div>
+      <h2>Tools Used in This Project</h2>
+      <div class="tech-tags">
+        <span class="tech-tag">Python</span>
+        <span class="tech-tag">FastAPI</span>
+        <span class="tech-tag">MQL4 / MQL5</span>
+        <span class="tech-tag">REST APIs</span>
+        <span class="tech-tag">Web Scraping</span>
+        <span class="tech-tag">Excel Automation</span>
+        <span class="tech-tag">Automation Anywhere</span>
+        <span class="tech-tag">Custom Data Extraction</span>
+      </div>
+    </div>
+
+    <!-- Bridge -->
+    <div class="section">
+      <div class="section-label">Why This Matters For You</div>
+      <h2>The Pattern Is Always the Same</h2>
+      <p>This project was for a trading firm, but the underlying problem is universal. If your business pulls data from multiple platforms manually, pastes it into spreadsheets, and spends hours every week building reports that should build themselves — I solve that problem.</p>
+      <p>Replace "trading platforms" with Google Ads, Shopify, and Klaviyo. Replace "equity monitoring" with ad performance tracking. Replace "rebalancing alerts" with anomaly detection on your ROAS. The technical details change. The pattern — and the result — is identical.</p>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta">
+      <h2>Interested in a system like this?</h2>
+      <p>I build automated reporting and workflow systems for marketing teams, e-commerce businesses, and small firms.</p>
+      <a href="https://www.linkedin.com/in/YOUR-LINKEDIN-URL">Let's Connect on LinkedIn</a>
+    </div>
+
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <div class="container">
+    <div class="spec-note">Anonymized Case Study — Based on Real Production System</div>
+    <p>Built by Natalie Lewis — AI Developer & Process Automation Engineer</p>
+    <p style="margin-top: 4px;">© 2026 — The Clear Dashboard Method</p>
+  </div>
+</div>
+
+</body>
+</html>
